@@ -1,13 +1,13 @@
-const { validateBody } = require("../../middlewares");
+const { validateBody } = require('../../middlewares');
 
-const { schemas } = require("../../models/user");
+const { schemas } = require('../../models/user');
 
-const ctrl = require("../../controllers/users");
+const ctrl = require('../../controllers/users');
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-router.get("/", ctrl.getAll);
+router.get('/', ctrl.getAll);
 
 // router.patch(
 //   "/:userId/follow",

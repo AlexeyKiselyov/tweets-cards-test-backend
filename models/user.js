@@ -1,8 +1,8 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const Joi = require("joi");
+const Joi = require('joi');
 
-const { handleMongooseError } = require("../helpers");
+const { handleMongooseError } = require('../helpers');
 
 // --------mongoose shema--------
 const userShema = new Schema(
@@ -18,7 +18,7 @@ const userShema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-userShema.post("save", handleMongooseError);
+userShema.post('save', handleMongooseError);
 
 // --------Joi shemas--------
 const addShema = Joi.object({
@@ -38,6 +38,6 @@ const schemas = {
   updateFollowShema,
 };
 
-const User = model("user", userShema);
+const User = model('user', userShema);
 
 module.exports = { User, schemas };
