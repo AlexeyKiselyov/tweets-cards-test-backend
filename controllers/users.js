@@ -3,21 +3,19 @@ const { User } = require('../models/user');
 const { HttpError, ctrlWrapper } = require('../helpers');
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, ...filter } = req.query;
   const skip = (page - 1) * limit;
-  const users = await User.find({}, '', { skip, limit });
-  res.json(users);
-};
 
-const getById = async (req, res) => {
-  const { userId } = req.params;
-  const userById = await User.findById(userId);
+  const dataCount = await User.count({ ...filter });
+  const data = await User.find({ ...filter }, '', { skip, limit });
 
-  if (!userById) {
-    throw HttpError(404, 'Not Found');
-  }
-
-  res.json(userById);
+  res.json({
+    total: dataCount,
+    page: +page,
+    limit: +limit,
+    totalPages: Math.ceil(dataCount / limit),
+    users: data,
+  });
 };
 
 const updateFollow = async (req, res) => {
@@ -31,11 +29,11 @@ const updateFollow = async (req, res) => {
   if (!result) {
     throw HttpError(404, 'Not Found');
   }
+
   res.json(result);
 };
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  getById: ctrlWrapper(getById),
-  updateFavorite: ctrlWrapper(updateFollow),
+  updateFollow: ctrlWrapper(updateFollow),
 };

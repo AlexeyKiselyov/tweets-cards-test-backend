@@ -31,6 +31,7 @@ const addShema = Joi.object({
 
 const updateFollowShema = Joi.object({
   isFollow: Joi.boolean(),
+  followers: Joi.number(),
 });
 
 const schemas = {
